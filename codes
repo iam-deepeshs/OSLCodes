@@ -1,0 +1,480 @@
+EXPT 4 C Code
+#include <stdio.h>
+
+int main() {
+    char operation;
+    double num1, num2, result;
+
+    // Prompt the user for the operation type
+    printf("Enter the arithmetic operation (+, -, *, /): ");
+    scanf(" %c", &operation);
+
+    // Prompt the user for the two numbers
+    printf("Enter the first number: ");
+    scanf("%lf", &num1);
+    printf("Enter the second number: ");
+    scanf("%lf", &num2);
+
+    // Perform the selected operation
+    if (operation == '+') {
+        result = num1 + num2;
+        printf("The sum is: %.2lf\n", result);
+    } else if (operation == '-') {
+        result = num1 - num2;
+        printf("The difference is: %.2lf\n", result);
+    } else if (operation == '*') {
+        result = num1 * num2;
+        printf("The product is: %.2lf\n", result);
+    } else if (operation == '/') {
+        if (num2 == 0) {
+            printf("Error: Division by zero is not allowed.\n");
+        } else {
+            result = num1 / num2;
+            printf("The quotient is: %.2lf\n", result);
+        }
+    } else {
+        printf("Invalid operation. Please enter one of +, -, *, /.\n");
+    }
+
+    return 0;
+}
+
+SHELL SCRIPT
+#!/bin/bash
+
+# Prompt the user for the operation type
+echo "Enter the arithmetic operation (+, -, *, /):"
+read operation
+
+# Prompt the user for the two numbers
+echo "Enter the first number:"
+read num1
+echo "Enter the second number:"
+read num2
+
+# Perform the selected operation
+if [ "$operation" = "+" ]; then
+    result=$((num1 + num2))
+    echo "The sum is: $result"
+elif [ "$operation" = "-" ]; then
+    result=$((num1 - num2))
+    echo "The difference is: $result"
+elif [ "$operation" = "*" ]; then
+    result=$((num1 * num2))
+    echo "The product is: $result"
+elif [ "$operation" = "/" ]; then
+    if [ "$num2" -eq 0 ]; then
+        echo "Error: Division by zero is not allowed."
+    else
+        result=$((num1 / num2))
+        echo "The quotient is: $result"
+    fi
+else
+    echo "Invalid operation. Please enter one of +, -, *, /."
+fi
+
+EXPT 5
+#!/bin/bash
+
+# Function to copy a file
+copy_file() {
+    echo "Enter the source file path:"
+    read src
+    echo "Enter the destination file path:"
+    read dest
+    if cp "$src" "$dest"; then
+        echo "File copied from $src to $dest"
+    else
+        echo "Failed to copy file"
+    fi
+}
+
+# Function to move a file
+move_file() {
+    echo "Enter the source file path:"
+    read src
+    echo "Enter the destination file path:"
+    read dest
+    if mv "$src" "$dest"; then
+        echo "File moved from $src to $dest"
+    else
+        echo "Failed to move file"
+    fi
+}
+
+# Function to rename a file
+rename_file() {
+    echo "Enter the current file name:"
+    read src
+    echo "Enter the new file name:"
+    read dest
+    if mv "$src" "$dest"; then
+        echo "File renamed from $src to $dest"
+    else
+        echo "Failed to rename file"
+    fi
+}
+
+# Function to delete a file
+delete_file() {
+    echo "Enter the file name to delete:"
+    read file
+    if rm "$file"; then
+        echo "File $file deleted"
+    else
+        echo "Failed to delete file"
+    fi
+}
+
+# Main menu loop
+while true; do
+    echo "File Operation Menu:"
+    echo "1. Copy File"
+    echo "2. Move File"
+    echo "3. Rename File"
+    echo "4. Delete File"
+    echo "5. Exit"
+    echo "Enter your choice:"
+    read choice 
+    case $choice in
+        1)
+            copy_file
+            ;;
+        2)
+            move_file
+            ;;
+        3)
+            rename_file
+            ;;
+        4)
+            delete_file
+            ;;
+        5)
+            echo "Exiting program."
+            exit 0
+            ;;
+        *)
+            echo "Invalid choice. Please try again."
+            ;;
+    esac
+done
+
+EXPT 6
+#!/bin/bash
+ 
+# Function to play the Rock-Paper-Scissors game
+play_game() {
+   # Array of choices
+   choices=("Rock" "Paper" "Scissors")
+   
+   # Computer's random choice
+   computer_choice=${choices[$RANDOM % 3]}
+   
+   # Prompt user for their choice
+   echo "Choose an option: 1) Rock 2) Paper 3) Scissors"
+   read user_input
+   
+   case $user_input in
+       1) user_pick="Rock" ;;
+       2) user_pick="Paper" ;;
+       3) user_pick="Scissors" ;;
+       *) echo "Invalid choice"; return ;;
+   esac
+   
+   # Display choices
+   echo "You chose: $user_pick"
+   echo "Computer chose: $computer_choice"
+   
+   # Determine the winner
+   if [ "$user_pick" == "$computer_choice" ]; then
+       echo "It's a tie!"
+   elif [ "$user_pick" == "Rock" ] && [ "$computer_choice" == "Scissors" ]; then
+       echo "You win!"
+   elif [ "$user_pick" == "Paper" ] && [ "$computer_choice" == "Rock" ]; then
+       echo "You win!"
+   elif [ "$user_pick" == "Scissors" ] && [ "$computer_choice" == "Paper" ]; then
+       echo "You win!"
+   else
+       echo "Computer wins!"
+   fi
+}
+ 
+# Main program loop
+while true; do
+   echo "Menu:"
+   echo "1) Play Game"
+   echo "2) Quit"
+   read menu_choice
+   
+   case $menu_choice in
+       1) play_game ;;
+       2) echo "Goodbye!"; exit ;;
+       *) echo "Invalid option" ;;
+   esac
+done
+
+EXPT 7
+#include <stdio.h>
+ 
+// Function to input array elements
+void input_array(int arr[], int n) {
+   for (int i = 0; i < n; i++) {
+       printf("Enter element %d: ", i + 1);
+       scanf("%d", &arr[i]);
+   }
+}
+ 
+// Function to calculate the average of array elements
+float calculate_average(int arr[], int n) {
+   int sum = 0;
+   for (int i = 0; i < n; i++) {
+       sum += arr[i];
+   }
+   return (float)sum / n;
+}
+ 
+// Function to find the maximum element in the array
+int find_maximum(int arr[], int n) {
+   int max = arr[0];
+   for (int i = 1; i < n; i++) {
+       if (arr[i] > max) {
+           max = arr[i];
+       }
+   }
+   return max;
+}
+ 
+int main() {
+   int n;
+ 
+   // Input the size of the array
+   printf("Enter the number of elements in the array: ");
+   scanf("%d", &n);
+ 
+   int arr[n];
+ 
+   // Input array elements
+   input_array(arr, n);
+ 
+   // Calculate the average
+   float average = calculate_average(arr, n);
+ 
+   // Find the maximum element
+   int max = find_maximum(arr, n);
+ 
+   // Display the results
+   printf("The average of the array elements is: %.2f\n", average);
+   printf("The maximum element in the array is: %d\n", max);
+ 
+   return 0;
+}
+
+EXPT 9
+#include <stdio.h>
+ 
+// Structure to represent each process
+struct Process {
+   int id;
+   int burstTime;
+   int waitingTime;
+   int turnAroundTime;
+};
+ 
+// Function to calculate waiting time for FCFS
+void calculateWaitingTimeFCFS(struct Process proc[], int n) {
+   proc[0].waitingTime = 0;
+   for (int i = 1; i < n; i++) {
+       proc[i].waitingTime = proc[i - 1].waitingTime + proc[i - 1].burstTime;
+   }
+}
+ 
+// Function to calculate turnaround time for FCFS
+void calculateTurnAroundTimeFCFS(struct Process proc[], int n) {
+   for (int i = 0; i < n; i++) {
+       proc[i].turnAroundTime = proc[i].burstTime + proc[i].waitingTime;
+   }
+}
+ 
+// Function to display process details and average times
+void displayResults(struct Process proc[], int n) {
+   int totalWaitingTime = 0, totalTurnAroundTime = 0;
+   printf("Process ID\tBurst Time\tWaiting Time\tTurnaround Time\n");
+   for (int i = 0; i < n; i++) {
+       totalWaitingTime += proc[i].waitingTime;
+       totalTurnAroundTime += proc[i].turnAroundTime;
+       printf("%d\t\t%d\t\t%d\t\t%d\n", proc[i].id, proc[i].burstTime, proc[i].waitingTime, proc[i].turnAroundTime);
+   }
+   printf("\nAverage Waiting Time = %.2f", (float)totalWaitingTime / n);
+   printf("\nAverage Turnaround Time = %.2f\n", (float)totalTurnAroundTime / n);
+}
+ 
+// Function to implement FCFS scheduling
+void FCFS(struct Process proc[], int n) {
+   calculateWaitingTimeFCFS(proc, n);
+   calculateTurnAroundTimeFCFS(proc, n);
+   printf("\nFCFS Scheduling:\n");
+   displayResults(proc, n);
+}
+ 
+// Function to sort processes by burst time for SJF
+void sortProcessesByBurstTime(struct Process proc[], int n) {
+   for (int i = 0; i < n - 1; i++) {
+       for (int j = 0; j < n - i - 1; j++) {
+           if (proc[j].burstTime > proc[j + 1].burstTime) {
+               struct Process temp = proc[j];
+               proc[j] = proc[j + 1];
+               proc[j + 1] = temp;
+           }
+       }
+   }
+}
+ 
+// Function to implement SJF scheduling
+void SJF(struct Process proc[], int n) {
+   sortProcessesByBurstTime(proc, n);
+   calculateWaitingTimeFCFS(proc, n);  // Same waiting time calculation as FCFS after sorting
+   calculateTurnAroundTimeFCFS(proc, n);
+   printf("\nSJF Scheduling:\n");
+   displayResults(proc, n);
+}
+ 
+int main() {
+   int n;
+   printf("Enter the number of processes: ");
+   scanf("%d", &n);
+   
+   struct Process proc[n];
+   for (int i = 0; i < n; i++) {
+       proc[i].id = i + 1;
+       printf("Enter burst time for process %d: ", i + 1);
+       scanf("%d", &proc[i].burstTime);
+       proc[i].waitingTime = 0;
+       proc[i].turnAroundTime = 0;
+   }
+ 
+   FCFS(proc, n);
+   SJF(proc, n);
+ 
+   return 0;
+}
+
+EXPT 10
+#include <stdio.h>
+#include <limits.h>
+ 
+#define MAX 100  // Maximum array size
+ 
+// Function to check if a page is in memory
+int isPageInMemory(int page, int memory[], int frames) {
+   for (int i = 0; i < frames; i++) {
+       if (memory[i] == page) return 1;
+   }
+   return 0;
+}
+ 
+// FIFO replacement function
+int fifo(int *front, int frames) {
+   int index = *front;
+   *front = (*front + 1) % frames;
+   return index;
+}
+ 
+// LRU replacement function
+int lru(int memory[], int frames, int refString[], int current) {
+   int least_recent[MAX];
+   for (int i = 0; i < frames; i++) {
+       least_recent[i] = -1;
+       for (int j = current - 1; j >= 0; j--) {
+           if (refString[j] == memory[i]) {
+               least_recent[i] = j;
+               break;
+           }
+       }
+   }
+ 
+   int min = INT_MAX, lru_index = -1;
+   for (int i = 0; i < frames; i++) {
+       if (least_recent[i] < min) {
+           min = least_recent[i];
+           lru_index = i;
+       }
+   }
+   return lru_index;
+}
+ 
+// Optimal replacement function
+int optimal(int memory[], int frames, int refString[], int n, int current) {
+   int future[MAX];
+   for (int i = 0; i < frames; i++) {
+       future[i] = INT_MAX;
+       for (int j = current + 1; j < n; j++) {
+           if (refString[j] == memory[i]) {
+               future[i] = j;
+               break;
+           }
+       }
+   }
+ 
+   int max = -1, optimal_index = -1;
+   for (int i = 0; i < frames; i++) {
+       if (future[i] > max) {
+           max = future[i];
+           optimal_index = i;
+       }
+   }
+   return optimal_index;
+}
+ 
+// Simulation function for page replacement
+void simulate(int refString[], int n, int frames, int algorithm) {
+   int memory[frames], pageFaults = 0, front = 0;
+ 
+   for (int i = 0; i < frames; i++) memory[i] = -1;
+ 
+   for (int i = 0; i < n; i++) {
+       int page = refString[i];
+       if (!isPageInMemory(page, memory, frames)) {
+           pageFaults++;
+           int pos;
+           if (algorithm == 1) pos = fifo(&front, frames);          // FIFO
+           else if (algorithm == 2) pos = lru(memory, frames, refString, i);  // LRU
+           else pos = optimal(memory, frames, refString, n, i);     // Optimal
+           memory[pos] = page;
+       }
+ 
+       // Print current memory state
+       printf("Memory: ");
+       for (int j = 0; j < frames; j++) {
+           if (memory[j] != -1) printf("%d ", memory[j]);
+           else printf("- ");
+       }
+       printf("\n");
+   }
+   printf("Total Page Faults: %d\n", pageFaults);
+}
+ 
+// Main function to input and call simulation
+int main() {
+   int n, frames;
+   printf("Enter the number of pages: ");
+   scanf("%d", &n);
+ 
+   int refString[n];
+   printf("Enter the reference string: ");
+   for (int i = 0; i < n; i++) scanf("%d", &refString[i]);
+ 
+   printf("Enter the number of frames: ");
+   scanf("%d", &frames);
+ 
+   printf("\nFIFO Simulation:\n");
+   simulate(refString, n, frames, 1);
+ 
+   printf("\nLRU Simulation:\n");
+   simulate(refString, n, frames, 2);
+ 
+   printf("\nOptimal Simulation:\n");
+   simulate(refString, n, frames, 3);
+ 
+   return 0;
+}
+
